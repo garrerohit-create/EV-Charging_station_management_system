@@ -1,0 +1,53 @@
+# =====================================================================
+# Git Ignore - EV Charging Station Management System
+# =====================================================================
+
+# 1. Sensitive Data, Credentials & Local Config
+.env
+.env.local
+*.env
+secrets.json
+credentials.json
+*_password.txt
+
+# 2. Microsoft Office Temporary / Lock Files
+~$*.docx
+~$*.pptx
+~$*.xlsx
+
+# 3. Database Dumps & MySQL Workbench Auto-backups
+*.bak
+*.sql.bak
+*.mwb.bak
+*.log
+*.err
+
+# 4. Operating System Artifacts (Windows / macOS)
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 5. Editor & IDE Settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# 6. Python Cache & Virtual Environments (if helper scripts used)
+__pycache__/
+*.py[cod]
+*$py.class
+*.venv
+venv/
+ENV/
+env/
+.pytest_cache/

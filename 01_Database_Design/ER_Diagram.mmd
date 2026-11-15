@@ -1,0 +1,61 @@
+erDiagram
+    users ||--o{ bookings : "places (1:N)"
+    stations ||--|{ chargers : "hosts (1:N)"
+    chargers ||--o{ bookings : "reserved_for (1:N)"
+    bookings ||--o| charging_sessions : "initiates (1:0..1)"
+    charging_sessions ||--o| payments : "billed_as (1:0..1)"
+
+    users {
+        int user_id PK "Auto Inc"
+        string full_name "Driver Name"
+        string email UK "Unique Email"
+        string phone "Phone Number"
+        datetime created_at "Registration Time"
+    }
+
+    stations {
+        int station_id PK "Auto Inc"
+        string station_name "Commercial Name"
+        string address "Physical Address"
+        string city "City"
+        string state "State"
+    }
+
+    chargers {
+        int charger_id PK "Auto Inc"
+        int station_id FK "References stations"
+        string charger_code "Unit Label UK"
+        enum charger_type "AC / DC"
+        decimal power_kw "Capacity kW > 0"
+        decimal rate_per_kwh "Rate >= 0"
+        enum status "ACTIVE / MAINT / OOS"
+    }
+
+    bookings {
+        int booking_id PK "Auto Inc"
+        int user_id FK "References users"
+        int charger_id FK "References chargers"
+        datetime start_time "Slot Start"
+        datetime end_time "Slot End > Start"
+        enum status "PENDING/CONFIRMED/CANCEL/COMP"
+        datetime created_at "Booking Timestamp"
+    }
+
+    charging_sessions {
+        int session_id PK "Auto Inc"
+        int booking_id FK,UK "1:1 References bookings"
+        datetime actual_start "Meter Start"
+        datetime actual_end "Meter End >= Start"
+        decimal energy_kwh "Consumed kWh >= 0"
+        decimal rate_per_kwh "Rate Snapshot ₹"
+        enum status "IN_PROGRESS / COMPLETED"
+    }
+
+    payments {
+        int payment_id PK "Auto Inc"
+        int session_id FK,UK "1:1 References sessions"
+        decimal amount "Billed Amount >= 0"
+        enum method "UPI / CARD / CASH"
+        enum status "PENDING / COMPLETED / FAILED"
+        datetime paid_at "Settlement Timestamp"
+    }
